@@ -7,11 +7,15 @@ describe("Compiler", function() {
   let compile = Compiler(instructions);
 
   it("turns text into an array of instruction opcodes", function() {
-    // let program = compile(`
-    // PUSH 123
-    // noOp
-    // `);
-    // console.log(program);
+    let program = compile(`
+    PUSH 123
+    noOp
+    `);
+    expect(program).toEqual([
+      instructions.fetchOpcode("push"),
+      123,
+      instructions.fetchOpcode("noop")
+    ]);
   });
 
 })
