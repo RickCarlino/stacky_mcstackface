@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "allowUnreachableCode": false,
+    "strictNullChecks": true,
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "outDir": "build"
+  },
+  "exclude": [
+    "node_modules",
+    "typings"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
+}

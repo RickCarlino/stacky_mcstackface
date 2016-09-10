@@ -1,0 +1,11 @@
+{
+  "name": "ts_forth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && jasmine-node build/vm/spec/ --verbose"
+  },
+  "author": "",
+  "license": "ISC"
+}
