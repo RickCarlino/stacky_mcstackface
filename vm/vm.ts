@@ -1,7 +1,7 @@
 import { instructions } from "./instruction_set";
-/** A slice of bits representing the FORTH memory area. */
+/** A slice of bits representing the VM memory. */
 export class VM {
-  /** Raw JS memory buffer. Try not to mess with it. */
+  /** Raw JS memory buffer. Avoid direct modification. */
   public buffer: Uint16Array;
 
   /** Default size of the memory buffer, in words */
@@ -13,17 +13,13 @@ export class VM {
   /** Last cell of memory. */
   public END_ADDRESS: number;
 
-  /** The Instruction Pointer.
-   *  Points to the next exection token to be executed
-   */
+  /** Instruction Pointer. Points to next memory address to be executed */
   public IP: number;
 
-  /** The Parameter Stack Pointer.
-   *  Gives access to the data stack.
-   * */
+  /** Pointer to top of parameter stack. */
   public PSP: number;
 
-  /** The Return Stack Pointer. */
+  /** Pointer to top of return stack. */
   public RSP: number;
 
   constructor(/** Memory size limit */
@@ -32,7 +28,7 @@ export class VM {
     this.reset();
   }
 
-  /** Run a "CPU cycle". */
+  /** Run one execution cycle */
   tick() {
     let ip = this.IP;
     this.IP++;
@@ -40,7 +36,7 @@ export class VM {
     instructions.exec(opCode, this);
   }
 
-  /** Clear stack/memory, set IP to START_ADDRESS. */
+  /** Completely reset the VM, including loaded programs. */
   reset() {
     this.PSP = this.END_ADDRESS;
     this.IP = this.START_ADDRESS;

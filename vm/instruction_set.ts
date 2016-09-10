@@ -1,5 +1,6 @@
 import { VM } from "./vm";
 import { Instruction, InstructionFn } from "./instruction";
+import { DefaultInstructions } from "./default_instructions";
 
 // WORKS CITED:
 //   https://users.ece.cmu.edu/~koopman/stack_computers/sec3_2.html
@@ -21,11 +22,13 @@ export class InstructionSet {
     });
   }
 
+  /** Execute a numeric op code against a VM's memory. */
   exec(opcode: number, vm: VM) {
     let instruction = this.all[opcode] || this.lookup["BAD_OPCODE"];
     instruction.call(vm);
   }
 
+  /** Add a new instruction to the current instruction set. */
   add(name: string, fn: InstructionFn) {
     let i = new Instruction(this.all.length, name, fn);
     this.all.push(i);
@@ -33,6 +36,7 @@ export class InstructionSet {
     return this;
   }
 
+  /** Find an instruction by name. */
   fetchOpcode(name: string) {
     let i = this.lookup[name.toUpperCase()];
     if(i) {
@@ -43,28 +47,23 @@ export class InstructionSet {
   }
 }
 
-// TODO: COnvert to dict. obj w/ number keys for readability.
+/** The default set of instructions. */
 export let instructions = new InstructionSet()
-  .add("NOOP", NOOP)
-  .add("PUSH", NOOP)
-  .add("STORE", NOOP)
-  .add("FETCH", NOOP)
-  .add("CALL", NOOP)
-  .add("RETURN", NOOP)
-  .add("IF", NOOP)
-  .add("ADD", NOOP)
-  .add("SUB", NOOP)
-  .add("OR", NOOP)
-  .add("XOR", NOOP)
-  .add("AND", NOOP)
-  .add("DROP", NOOP)
-  .add("DUP", NOOP)
-  .add("OVER", NOOP)
-  .add("SWAP", NOOP)
-  .add("RPUSH", NOOP)
-  .add("RPOP", NOOP); // Add JMP? Just use IF? Hmmm...
-
-
-function NOOP(vm: VM) {
-  console.log("I am a noop!");
-}
+  .add("NOOP", DefaultInstructions.NOOP)
+  .add("PUSH", DefaultInstructions.PUSH)
+  .add("STORE", DefaultInstructions.STORE)
+  .add("FETCH", DefaultInstructions.FETCH)
+  .add("CALL", DefaultInstructions.CALL)
+  .add("RETURN", DefaultInstructions.RETURN)
+  .add("IF", DefaultInstructions.IF)
+  .add("ADD", DefaultInstructions.ADD)
+  .add("SUB", DefaultInstructions.SUB)
+  .add("OR", DefaultInstructions.OR)
+  .add("XOR", DefaultInstructions.XOR)
+  .add("AND", DefaultInstructions.AND)
+  .add("DROP", DefaultInstructions.DROP)
+  .add("DUP", DefaultInstructions.DUP)
+  .add("OVER", DefaultInstructions.OVER)
+  .add("SWAP", DefaultInstructions.SWAP)
+  .add("RPUSH", DefaultInstructions.RPUSH)
+  .add("RPOP", DefaultInstructions.RPOP);

@@ -1,6 +1,5 @@
 /// <reference path="../../typings/index.d.ts" />
 
-import { Instruction } from "../instruction";
 import { VM } from "../vm";
 
 describe("Default instructions", function() {
