@@ -8,10 +8,10 @@ import { Instruction, InstructionFn } from "./instruction";
 export class InstructionSet {
 
   /** All instructions, indexed by opcode */
-  public all: Instruction[];
+  private all: Instruction[];
 
   /** All instructions, indexed by name */
-  public lookup: {[name: string]: Instruction};
+  private lookup: {[name: string]: Instruction};
 
   constructor() {
     this.all = [];
@@ -34,7 +34,7 @@ export class InstructionSet {
   }
 
   fetchOpcode(name: string) {
-    let i = this.lookup[name];
+    let i = this.lookup[name.toUpperCase()];
     if(i) {
       return i.opCode;
     } else {

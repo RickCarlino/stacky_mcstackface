@@ -1,10 +1,11 @@
 import { VM } from "./vm";
 
 export class Instruction {
-  constructor(public opCode: number,
-    public name: string,
-    public fn: InstructionFn) {
+  public name: string;
 
+  constructor(public opCode: number, name: string,
+    public fn: InstructionFn) {
+    this.name = name.toUpperCase();
   }
 
   call(vm: VM) {

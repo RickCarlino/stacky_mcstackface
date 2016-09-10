@@ -5,7 +5,7 @@ export class VM {
   public buffer: Uint16Array;
 
   /** Default size of the memory buffer, in words */
-  static DEFAULT_SIZE: number = 2048;
+  static DEFAULT_SIZE: number = 256;
 
   /** First memory address that can be used for applications. */
   public START_ADDRESS = 0;
@@ -26,9 +26,6 @@ export class VM {
   /** The Return Stack Pointer. */
   public RSP: number;
 
-  /** Top of Stack Cache. */
-  public TOS: number;
-
   constructor(/** Memory size limit */
     public SIZE: number = VM.DEFAULT_SIZE) {
     this.END_ADDRESS = this.SIZE - 1;
@@ -45,9 +42,9 @@ export class VM {
 
   /** Clear stack/memory, set IP to START_ADDRESS. */
   reset() {
-    this.TOS = this.END_ADDRESS;
+    this.PSP = this.END_ADDRESS;
     this.IP = this.START_ADDRESS;
-    this.buffer = new Uint8Array(this.SIZE);
+    this.buffer = new Uint16Array(this.SIZE);
     this.buffer.fill(0);
   };
 
@@ -59,15 +56,5 @@ export class VM {
       that.buffer[index + that.START_ADDRESS] = instruction;
     });
   }
-  /** The Working Register.
-   * Provides an address from which the data field of the currently executing word can be found.
-   * */
-  public W: number;
-
-  /** A working register */
-  public X: number;
-
-  /** User Pointer. Base address of the task's user area. */
-  public UP: number;
 }
 

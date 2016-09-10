@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && jasmine-node build/vm/spec/ --verbose"
+    "test": "tsc && jasmine-node build/vm/spec/ --verbose --captureExceptions"
   },
   "author": "",
   "license": "ISC"

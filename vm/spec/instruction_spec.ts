@@ -6,7 +6,7 @@ import { VM } from "../vm";
 describe("Instruction", function() {
   it("Initializes an instruction", function() {
     const vm = new VM(500);
-    const i = new Instruction(4, "test", function(vm) {
+    const i = new Instruction(4, "set_addr_1_to_222", function(vm) {
       vm.buffer[1] = 222;
     });
     
