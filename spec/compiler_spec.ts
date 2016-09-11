@@ -1,4 +1,4 @@
-/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../typings/index.d.ts" />
 
 import { Compiler } from "../compiler";
 import { instructions } from "../instruction_set";

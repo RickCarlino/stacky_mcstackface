@@ -3,7 +3,9 @@ import { InstructionSet } from "./instruction_set";
 /** Converts a block of text into a cleaned array of tokens. */
 function tokenize(input: string): string[] {
   return input
+    // Split tokens on "\n" or " ".
     .split(/\s+/)
+    // Remove empty tokens.
     .filter(w => w !== "");
 }
 

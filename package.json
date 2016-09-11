@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && jasmine-node build/vm/spec/ --verbose --captureExceptions"
+    "test": "tsc && jasmine-node build/spec/ --verbose --captureExceptions"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^2.5.1",
+    "jasmine-node": "^1.14.5"
+  }
 }
