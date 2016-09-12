@@ -1,10 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 
 import { Compiler } from "../compiler";
-import { instructions } from "../instruction_set";
+import { defaultIntstructionSet } from "../instruction_set";
 
 describe("Compiler", function() {
-  let compile = Compiler(instructions);
+  let compile = Compiler(defaultIntstructionSet);
 
   it("turns text into an array of instruction opcodes", function() {
     let program = compile(`
@@ -12,9 +12,9 @@ describe("Compiler", function() {
     noOp
     `);
     expect(program).toEqual([
-      instructions.fetchOpcode("push"),
+      defaultIntstructionSet.fetchOpcode("push"),
       123,
-      instructions.fetchOpcode("noop")
+      defaultIntstructionSet.fetchOpcode("noop")
     ]);
   });
 

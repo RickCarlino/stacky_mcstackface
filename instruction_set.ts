@@ -36,6 +36,16 @@ export class InstructionSet {
     return this;
   }
 
+  /** Find a pneumonic by number */
+  fetchPneumonic(opCode: number) {
+    let i = this.all[opCode];
+    if(i) {
+      return i.name;
+    } else {
+      throw new Error("Can't find pneumonic with op code " + opCode);
+    }
+  }
+
   /** Find an instruction by name. */
   fetchOpcode(name: string) {
     let i = this.lookup[name.toUpperCase()];
@@ -48,7 +58,7 @@ export class InstructionSet {
 }
 
 /** The default set of instructions. */
-export let instructions = new InstructionSet()
+export let defaultIntstructionSet = new InstructionSet()
   .add("NOOP", DefaultInstructions.NOOP)
   .add("PUSH", DefaultInstructions.PUSH)
   .add("STORE", DefaultInstructions.STORE)

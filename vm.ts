@@ -1,4 +1,4 @@
-import { instructions } from "./instruction_set";
+import { defaultIntstructionSet } from "./instruction_set";
 /** A slice of bits representing the VM memory. */
 export class VM {
   /** Raw JS memory buffer. Avoid direct modification. */
@@ -24,16 +24,17 @@ export class VM {
 
   constructor(/** Memory size limit */
     public SIZE: number = VM.DEFAULT_SIZE) {
+    this.IP = this.START_ADDRESS - 1;
     this.END_ADDRESS = this.SIZE - 1;
     this.reset();
   }
 
   /** Run one execution cycle */
   tick() {
-    let ip = this.IP;
-    this.IP++;
-    let opCode = this.buffer[ip];
-    instructions.exec(opCode, this);
+    let opCode = this.buffer[this.IP];
+    let pneumonic = defaultIntstructionSet.fetchPneumonic(opCode);
+    console.log(`Executing ${pneumonic} (${ opCode }) at address ${ this.IP }`);
+    defaultIntstructionSet.exec(opCode, this);
   }
 
   /** Completely reset the VM, including loaded programs. */
