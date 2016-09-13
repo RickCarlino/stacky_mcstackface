@@ -83,7 +83,7 @@ export namespace DefaultInstructions {
   }
   
   export function DROP(vm: VM) {
-    vm.PSP--;
+    vm.PSP++;
     let val = vm.buffer[vm.PSP];
     vm.buffer[vm.PSP] = 0; // This is for ease of debugging. Not required.
     return val;
