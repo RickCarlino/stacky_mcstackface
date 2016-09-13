@@ -24,8 +24,6 @@ export class VM {
 
   constructor(/** Memory size limit */
     public SIZE: number = VM.DEFAULT_SIZE) {
-    this.IP = this.START_ADDRESS - 1;
-    this.END_ADDRESS = this.SIZE - 1;
     this.reset();
   }
 
@@ -39,6 +37,7 @@ export class VM {
 
   /** Completely reset the VM, including loaded programs. */
   reset() {
+    this.END_ADDRESS = this.SIZE - 1;
     this.PSP = this.END_ADDRESS;
     this.IP = this.START_ADDRESS;
     this.buffer = new Uint16Array(this.SIZE);
