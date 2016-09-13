@@ -19,11 +19,12 @@ export namespace DefaultInstructions {
   }
   
   /** Stores n2 into memory address listed in n1
-   * (n2, n1 -- )
+   * (value, addr -- )
   */
   export function STORE(vm: VM) {
-    console.log("PENDING...");
-    
+    let addr = DROP(vm);
+    let val = DROP(vm);
+    vm.IP++; // Move IP ontop of literal value
   }
   
   /** Places contents of arbitrary memory address onto top of stack*/
@@ -82,8 +83,10 @@ export namespace DefaultInstructions {
   }
   
   export function DROP(vm: VM) {
-    console.log("PENDING...");
-    
+    vm.PSP--;
+    let val = vm.buffer[vm.PSP];
+    vm.buffer[vm.PSP] = 0; // This is for ease of debugging. Not required.
+    return val;
   }
   
   export function DUP(vm: VM) {

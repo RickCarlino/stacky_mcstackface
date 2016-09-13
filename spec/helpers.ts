@@ -9,3 +9,7 @@ export function run(code: string, vm: VM = new VM()): VM {
     vm.load(program);
     return vm;
 }
+
+export function inspectLast(x: number, vm: VM) {
+    console.log(vm.buffer.slice(Math.max(vm.buffer.length - x, 1)));
+}
