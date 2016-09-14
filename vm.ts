@@ -31,7 +31,7 @@ export class VM {
   tick() {
     let opCode = this.buffer[this.IP];
     let pneumonic = defaultIntstructionSet.fetchPneumonic(opCode);
-    console.log(`Executing ${pneumonic} (${ opCode }) at address ${ this.IP }`);
+    // console.log(`Executing ${pneumonic} (${ opCode }) at address ${ this.IP }`);
     defaultIntstructionSet.exec(opCode, this);
   }
 

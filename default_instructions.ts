@@ -24,13 +24,24 @@ export namespace DefaultInstructions {
   export function STORE(vm: VM) {
     let addr = DROP(vm);
     let val = DROP(vm);
+    if(vm.buffer[addr] !== undefined) {
+      vm.buffer[addr] = val;
+    } else {
+      throw new Error(`Memory address ${ addr } out of range (only ${ vm.buffer.length } words)`)
+    }
     vm.IP++; // Move IP ontop of literal value
   }
   
-  /** Places contents of arbitrary memory address onto top of stack*/
+  /** Places contents of arbitrary memory address onto top of stack
+   * ( addr -- addr contents )
+  */
   export function FETCH(vm: VM) {
-    console.log("PENDING...");
-    
+    // Pop memory address from top of stack.
+    let addr = DROP(vm);
+    let val = vm.buffer[addr];
+    vm.buffer[vm.PSP] = val;
+    vm.PSP--;
+    vm.IP++;
   }
   
   /** Pushes current IP onto return stack and jumps into memory address as

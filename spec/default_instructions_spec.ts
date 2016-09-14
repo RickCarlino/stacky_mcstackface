@@ -37,8 +37,8 @@ describe("Default instructions", function() {
 
   it("has a STORE instruction", () => {
     let vm = run(`
-    push 12
     push 34
+    push 12
     store
     `);
     let startIP = vm.IP;
@@ -53,6 +53,35 @@ describe("Default instructions", function() {
     "Push increments the stack 2x. Store 1x. Push + push + store = 5 IP incrementations.");
     expect(vm.PSP).toEqual(vm.END_ADDRESS,
     "The STORE instruction should clear the last two stack items.");
+    expect(vm.buffer[12]).toEqual(34);
+  });
+
+  it("has a FETCH instruction", () => {
+    let vm = run(`
+    push 9
+    push 10
+    store
+    push 10
+    fetch
+    `);
+    let startIP = vm.IP;
+    let startPSP = vm.PSP;
+    inspectLast(25, vm);
+    vm.tick();
+    inspectLast(25, vm);
+    vm.tick();
+    inspectLast(25, vm);
+    vm.tick();
+    inspectLast(25, vm);
+    vm.tick();
+    inspectLast(25, vm);
+    vm.tick();
+    inspectLast(25, vm);
+    let endIP = vm.IP;
+    let endPSP = vm.PSP;
+    expect(vm.PSP).toEqual((vm.END_ADDRESS - 1),
+    "Expected stack to have 1 item after STORE operation.");
+    expect(vm.buffer[vm.PSP + 1]).toEqual(12);
   });
 
 })
