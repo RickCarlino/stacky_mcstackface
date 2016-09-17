@@ -36,6 +36,7 @@ export namespace DefaultInstructions {
    * ( addr -- addr contents )
   */
   export function FETCH(vm: VM) {
+    // Possible off by one???
     // Pop memory address from top of stack.
     let addr = DROP(vm);
     let val = vm.buffer[addr];

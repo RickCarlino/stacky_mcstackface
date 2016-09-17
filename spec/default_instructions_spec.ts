@@ -58,30 +58,24 @@ describe("Default instructions", function() {
 
   it("has a FETCH instruction", () => {
     let vm = run(`
-    push 9
-    push 10
+    push 13
+    push 8
     store
-    push 10
+    push 8
     fetch
     `);
     let startIP = vm.IP;
     let startPSP = vm.PSP;
-    inspectLast(25, vm);
     vm.tick();
-    inspectLast(25, vm);
     vm.tick();
-    inspectLast(25, vm);
     vm.tick();
-    inspectLast(25, vm);
     vm.tick();
-    inspectLast(25, vm);
     vm.tick();
-    inspectLast(25, vm);
     let endIP = vm.IP;
     let endPSP = vm.PSP;
     expect(vm.PSP).toEqual((vm.END_ADDRESS - 1),
     "Expected stack to have 1 item after STORE operation.");
-    expect(vm.buffer[vm.PSP + 1]).toEqual(12);
+    expect(vm.buffer[vm.PSP + 1]).toEqual(13);
   });
 
 })
