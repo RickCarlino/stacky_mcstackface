@@ -5,7 +5,7 @@ import { Compiler } from "../compiler";
 import { run, inspectLast } from "./helpers";
 
 
-describe("Default instructions", function() {
+describe("Default instructions", function () {
   it("has a NOOP instruction", () => {
     let vm = run("nooP Noop NOOP");
     let startIP = vm.IP;
@@ -14,12 +14,12 @@ describe("Default instructions", function() {
     vm.tick();
     let endIP = vm.IP;
     expect(endIP).toEqual(startIP + 3,
-    "A NOOP instruction should increment the instruction pointer each time it is called.");
+      "A NOOP instruction should increment the instruction pointer each time it is called.");
     expect(vm.PSP).toEqual(vm.END_ADDRESS,
-    "The NOOP instruction has no stack effect.");
+      "The NOOP instruction has no stack effect.");
   });
 
-  it("has a PUSH instruction", function() {
+  it("has a PUSH instruction", function () {
     let vm = run("PUSH 1 pUsH 2 PUsh 3");
     vm.tick();
     vm.tick();
@@ -50,9 +50,9 @@ describe("Default instructions", function() {
     let endPSP = vm.PSP;
     expect(startPSP).toEqual(vm.END_ADDRESS);
     expect(endIP).toEqual((startIP + 5),
-    "Push increments the stack 2x. Store 1x. Push + push + store = 5 IP incrementations.");
+      "Push increments the stack 2x. Store 1x. Push + push + store = 5 IP incrementations.");
     expect(vm.PSP).toEqual(vm.END_ADDRESS,
-    "The STORE instruction should clear the last two stack items.");
+      "The STORE instruction should clear the last two stack items.");
     expect(vm.buffer[12]).toEqual(34);
   });
 
@@ -74,8 +74,33 @@ describe("Default instructions", function() {
     let endIP = vm.IP;
     let endPSP = vm.PSP;
     expect(vm.PSP).toEqual((vm.END_ADDRESS - 1),
-    "Expected stack to have 1 item after STORE operation.");
+      "Expected stack to have 1 item after STORE operation.");
     expect(vm.buffer[vm.PSP + 1]).toEqual(13);
+  });
+
+  it("has CALL and RETURN instruction", () => {
+    // Testing in isolation is not enough.
+    // It takes two flints to make a fire.
+    // So too must the CALL and RETURN instructions coexist.
+    //
+    // - Julius Caesar
+    let vm = run(`
+      push
+      0
+      call
+    `);
+    vm.tick();
+    inspectLast(30, vm);
+    vm.tick();
+    inspectLast(30, vm);
+    vm.tick();
+    inspectLast(30, vm);
+    vm.tick();
+    inspectLast(30, vm);
+    vm.tick();
+    inspectLast(30, vm);
+    vm.tick();
+    inspectLast(30, vm);
   });
 
 })

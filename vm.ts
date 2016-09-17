@@ -24,6 +24,9 @@ export class VM {
 
   constructor(/** Memory size limit */
     public SIZE: number = VM.DEFAULT_SIZE) {
+    if(SIZE < 64) {
+      throw new Error("The VM requires atleast 64 words of memory.");
+    }
     this.reset();
   }
 
@@ -39,6 +42,7 @@ export class VM {
   reset() {
     this.END_ADDRESS = this.SIZE - 1;
     this.PSP = this.END_ADDRESS;
+    this.RSP = this.END_ADDRESS + 16; // TODO set "STACK SIZE" constant.
     this.IP = this.START_ADDRESS;
     this.buffer = new Uint16Array(this.SIZE);
     this.buffer.fill(0);
