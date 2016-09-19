@@ -2,7 +2,7 @@
 
 import { VM } from "../vm";
 import { Compiler } from "../compiler";
-import { run, inspectLast } from "./helpers";
+import { run, dump } from "./helpers";
 
 
 describe("Default instructions", function () {
@@ -90,17 +90,17 @@ describe("Default instructions", function () {
       call
     `);
     vm.tick();
-    inspectLast(30, vm);
+    dump(vm);
     vm.tick();
-    inspectLast(30, vm);
+    dump(vm);
     vm.tick();
-    inspectLast(30, vm);
+    dump(vm);
     vm.tick();
-    inspectLast(30, vm);
+    dump(vm);
     vm.tick();
-    inspectLast(30, vm);
+    dump(vm);
     vm.tick();
-    inspectLast(30, vm);
+    dump(vm);
   });
 
 })
