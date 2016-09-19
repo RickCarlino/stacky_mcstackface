@@ -10,10 +10,10 @@ export namespace DefaultInstructions {
    * ( -- )
    */
   export function PUSH(vm: VM) {
-    vm.IP++; // Move IP ontop of literal value
+    NOOP(vm);
     vm.buffer[vm.PSP] = vm.buffer[vm.IP];
     vm.PSP--; // Grow stack.
-    vm.IP++; // Goto next instruction
+    NOOP(vm); // Goto next instruction
   }
   
   /** Stores n2 into memory address listed in n1
@@ -27,7 +27,7 @@ export namespace DefaultInstructions {
     } else {
       throw new Error(`Memory address ${ addr } out of range (only ${ vm.buffer.length } words)`)
     }
-    vm.IP++; // Move IP ontop of literal value
+    NOOP(vm); // Move IP ontop of literal value
   }
   
   /** Places contents of arbitrary memory address onto top of stack
@@ -40,7 +40,7 @@ export namespace DefaultInstructions {
     let val = vm.buffer[addr];
     vm.buffer[vm.PSP] = val;
     vm.PSP--;
-    vm.IP++;
+    NOOP(vm);
   }
   
   /** Pushes current IP onto return stack and jumps into memory address as
@@ -57,6 +57,9 @@ export namespace DefaultInstructions {
   
   /** Jumps to adress n2 if n1 is 0. */
   export function IF(vm: VM) {
+    // If N1 is false (value is 0)
+    // perform a branch to the address contained in the next program cell, otherwise continue
+    // DOES NOT HAVE AN EFFECT ON RSP!
     console.log("PENDING...");
     
   }
@@ -123,6 +126,8 @@ export namespace DefaultInstructions {
     vm.buffer[vm.RSP] = 0; // This is for ease of debugging. Not required.
     return val;
   }
-  // Add OUT for output?
-  // Add JMP? Just use IF? Hmmm...
+  // Add MUL DIV LSHIFT and RSHIFT
+  // Rename PUSH to LIT to stay consistent with text???  
+  // Add stack overflow/underflow exceptions or interupts?
+  // Add I/O interupts (hardware CALL to address 0 like an M17?) and/or SYSCALL for output
 }
