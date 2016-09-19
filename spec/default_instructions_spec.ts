@@ -86,27 +86,35 @@ describe("Default instructions", function () {
     // - Julius Caesar
     let vm = run(`
       push
-      0
+      6
       call
-      push
-      4
+      drop
+      noop
+      noop
       push
       5
       return
     `);
+    expect(vm.RSP).toBe(55,
+    "In a 64 word VM, RSP should start at address 55.");
+    vm.tick(); // PUSH 6
+    vm.tick(); // CALL
+    expect(vm.IP).toBe(6,
+    "executing 'PUSH 6 CALL' should set IP to 6 in one tick.");
+    expect(vm.PSP).toBe(63,
+    "Executing 'CALL' Should decrement the stack from 62 to 63.");
+    expect(vm.buffer[vm.RSP + 1]).toBe(3,
+    "Executing 'CALL' should store next IP address into return stack before jumping into subroutine.");
+    expect(vm.RSP).toBe(54,
+    "CALLing an address should grow RSP by 1.");
     vm.tick();
-    dump(vm);
-    expect(vm.IP).toBe(2);
+    expect(vm.buffer[vm.PSP + 1]).toBe(5,
+    "Expected to be on the stack after calling a subroutine that pushes 5 on stack.");
     vm.tick();
-    dump(vm);
-    vm.tick();
-    dump(vm);
-    vm.tick();
-    dump(vm);
-    vm.tick();
-    dump(vm);
-    vm.tick();
-    dump(vm);
+    expect(vm.IP).toBe(3,
+    "RETURN should take IP back to (starting_address + 1) ");
+    expect(vm.RSP).toBe(55,
+    "RETURNing should shrink RSP by 1.");
   });
 
 })

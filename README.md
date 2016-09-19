@@ -3,7 +3,7 @@
 A stack based virtual machine and compiler based off of [the instruction set outlined in this book](https://users.ece.cmu.edu/~koopman/stack_computers/sec3_2.html).
 
 
-# Rationale and Design Consideration
+# Rationale and Design Considerations
 
  * I wanted to write my own FORTH, but didn't want to go through the trouble of learning a real assembly environment.
  * You don't tell me what to do! IM JUST HAVING FUN OK!?

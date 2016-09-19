@@ -4,9 +4,7 @@ export namespace DefaultInstructions {
   /** No operation.
    * ( -- )
    */
-  export function NOOP(vm: VM) {
-    vm.IP++;
-  }
+  export function NOOP(vm: VM) { vm.IP++; }
   
   /** Pushes memory address after IP onto parameter stack.
    * ( -- )
@@ -49,15 +47,13 @@ export namespace DefaultInstructions {
    * top of stack
    */
   export function CALL(vm: VM) {
-    console.log("PENDING...");
-    
+    vm.buffer[vm.RSP] = vm.IP + 1;
+    vm.RSP--
+    vm.IP = DROP(vm);
   }
   
   /** Pops top of return stack and sets IP to that address. */
-  export function RETURN(vm: VM) {
-    console.log("PENDING...");
-    
-  }
+  export function RETURN(vm: VM) { vm.IP = RDROP(vm); }
   
   /** Jumps to adress n2 if n1 is 0. */
   export function IF(vm: VM) {
@@ -120,10 +116,12 @@ export namespace DefaultInstructions {
     console.log("PENDING...");
     
   }
-  
-  export function RPOP(vm: VM) {
-    console.log("PENDING...");
-    
+  // TODO: Rename to RDROP
+  export function RDROP(vm: VM) {
+    vm.RSP++;
+    let val = vm.buffer[vm.RSP];
+    vm.buffer[vm.RSP] = 0; // This is for ease of debugging. Not required.
+    return val;
   }
   // Add OUT for output?
   // Add JMP? Just use IF? Hmmm...

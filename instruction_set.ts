@@ -76,4 +76,4 @@ export let defaultIntstructionSet = new InstructionSet()
   .add("OVER", DefaultInstructions.OVER)
   .add("SWAP", DefaultInstructions.SWAP)
   .add("RPUSH", DefaultInstructions.RPUSH)
-  .add("RPOP", DefaultInstructions.RPOP);
+  .add("RDROP", DefaultInstructions.RDROP);
