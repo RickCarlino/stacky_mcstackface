@@ -117,4 +117,37 @@ describe("Default instructions", function () {
     "RETURNing should shrink RSP by 1.");
   });
 
+  it('branches when IF is given 0', function() {
+     
+    let vm = run(`  if
+                    0
+                    5
+                    push
+                    66
+                    push
+                    99 `);
+    vm.tick();
+    expect(vm.IP).toBe(5,
+      "IF instruction should jump IP to address if value is 0.");
+    vm.tick();
+    expect(vm.buffer[vm.PSP + 1]).toBe(99,
+      "Expected the IF statement to branch to PUSH 99.");
+  });
+
+  it("does not branch when condition != 0", function() {
+    let vm = run(`  if
+                    1
+                    5
+                    push
+                    66
+                    push
+                    99 `);
+    vm.tick();
+    expect(vm.IP).toBe(3,
+      "IF instruction should jump to next instruction if condition is not 0.");
+    vm.tick();
+    expect(vm.buffer[vm.PSP + 1]).toBe(66,
+      "Expected the IF statement to branch to PUSH 66.");
+  });
+
 })

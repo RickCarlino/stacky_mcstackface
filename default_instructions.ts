@@ -1,24 +1,21 @@
 import { VM } from "./vm";
 /** The standard set of instructions that come with the VM. */
 export namespace DefaultInstructions {
-  /** No operation.
+  /** Increment IP by 1 (no operation).
    * ( -- )
    */
-  export function NOOP(vm: VM) { vm.IP++; }
+  export function NOOP(vm: VM) { return vm.buffer[++vm.IP]; }
   
   /** Pushes memory address after IP onto parameter stack.
    * ( -- )
    */
   export function PUSH(vm: VM) {
+    vm.buffer[vm.PSP] = NOOP(vm);
+    vm.PSP--;
     NOOP(vm);
-    vm.buffer[vm.PSP] = vm.buffer[vm.IP];
-    vm.PSP--; // Grow stack.
-    NOOP(vm); // Goto next instruction
   }
   
-  /** Stores n2 into memory address listed in n1
-   * (value, addr -- )
-  */
+  /** Stores n2 into memory address listed in n1(value, addr -- ) */
   export function STORE(vm: VM) {
     let addr = DROP(vm);
     let val = DROP(vm);
@@ -58,10 +55,11 @@ export namespace DefaultInstructions {
   /** Jumps to adress n2 if n1 is 0. */
   export function IF(vm: VM) {
     // If N1 is false (value is 0)
-    // perform a branch to the address contained in the next program cell, otherwise continue
-    // DOES NOT HAVE AN EFFECT ON RSP!
-    console.log("PENDING...");
-    
+    if(!NOOP(vm)) {
+      vm.IP = NOOP(vm);
+    } else {
+      NOOP(vm);
+    };
   }
   
   /** Puts n2 + n1 on top of stack. */
