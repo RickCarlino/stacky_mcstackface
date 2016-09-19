@@ -88,9 +88,15 @@ describe("Default instructions", function () {
       push
       0
       call
+      push
+      4
+      push
+      5
+      return
     `);
     vm.tick();
     dump(vm);
+    expect(vm.IP).toBe(2);
     vm.tick();
     dump(vm);
     vm.tick();
