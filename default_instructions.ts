@@ -64,8 +64,9 @@ export namespace DefaultInstructions {
   
   /** Puts n2 + n1 on top of stack. */
   export function ADD(vm: VM) {
-    console.log("PENDING...");
-    
+    vm.buffer[vm.PSP + 2] = DROP(vm) + DROP(vm);
+    vm.IP++
+    vm.PSP--;
   }
 
   /** Puts n2 - n1 on top of stack. */  
@@ -105,7 +106,6 @@ export namespace DefaultInstructions {
   
   export function OVER(vm: VM) {
     console.log("PENDING...");
-    
   }
   
   export function SWAP(vm: VM) {

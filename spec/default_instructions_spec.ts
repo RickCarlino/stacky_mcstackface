@@ -150,4 +150,24 @@ describe("Default instructions", function () {
       "Expected the IF statement to branch to PUSH 66.");
   });
 
+  it("ADDs two numbers", function() {
+    let vm = run(`
+    push
+    2
+    push
+    3
+    add
+    noop
+    `);
+    vm.tick();
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    expect(vm.IP).toBe(5,
+      "Expected add to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 1]).toBe(5,
+    "Expect (2 3 ADD) to leave 5 on the stack.");
+  })
+
 })
