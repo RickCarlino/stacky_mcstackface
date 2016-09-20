@@ -71,25 +71,31 @@ export namespace DefaultInstructions {
 
   /** Puts n2 - n1 on top of stack. */  
   export function SUB(vm: VM) {
-    console.log("PENDING...");
-    
+    let one = DROP(vm);
+    let two = DROP(vm);
+    vm.buffer[vm.PSP + 2] = one - two;
+    vm.IP++
+    vm.PSP--;
   }
   
   /** Bitwise OR of n1 and n2 */
   export function OR(vm: VM) {
-    console.log("PENDING...");
-    
+    // vm.buffer[vm.PSP + 2] = DROP(vm) | DROP(vm);
+    // vm.IP++
+    // vm.PSP--;
   }
   
   /** Exclusive OR of n1 and n2 */
   export function XOR(vm: VM) {
-    console.log("PENDING...");
-    
+    // vm.buffer[vm.PSP + 2] = DROP(vm) ^ DROP(vm);
+    // vm.IP++
+    // vm.PSP--;
   }
   
   export function AND(vm: VM) {
-    console.log("PENDING...");
-    
+    // vm.buffer[vm.PSP + 2] = DROP(vm) & DROP(vm);
+    // vm.IP++
+    // vm.PSP--;
   }
   
   export function DROP(vm: VM) {

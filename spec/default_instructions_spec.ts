@@ -161,13 +161,36 @@ describe("Default instructions", function () {
     `);
     vm.tick();
     vm.tick();
-    dump(vm);
     vm.tick();
-    dump(vm);
+
     expect(vm.IP).toBe(5,
       "Expected add to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(5,
     "Expect (2 3 ADD) to leave 5 on the stack.");
-  })
+  });
+
+  it("SUBs two numbers", function() {
+    let vm = run(`
+    push
+    7
+    push
+    2
+    sub
+    noop
+    `);
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    vm.tick();
+
+    expect(vm.IP).toBe(5,
+      "Expected add to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 1]).toBe(5,
+      "Expect (3 2 SUB) to leave 1 on the stack.");
+  });
 
 })
