@@ -58,7 +58,7 @@ export namespace DefaultInstructions {
     if(!NOOP(vm)) {
       vm.IP = NOOP(vm);
     } else {
-      NOOP(vm);
+      vm.IP += 2;
     };
   }
   
