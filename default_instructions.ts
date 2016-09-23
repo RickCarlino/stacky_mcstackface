@@ -143,8 +143,10 @@ export namespace DefaultInstructions {
   }
   
   export function RPUSH(vm: VM) {
-    console.log("PENDING...");
-    
+    vm.buffer[vm.RSP] = vm.buffer[vm.IP + 1];
+    vm.RSP--;
+    vm.IP++;
+    vm.IP++;
   }
   // Add MUL DIV LSHIFT and RSHIFT
   // Rename PUSH to LIT to stay consistent with text???  

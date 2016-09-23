@@ -25,29 +25,29 @@ describe("Default instructions", function () {
       return
     `);
     expect(vm.RSP).toBe(55,
-    "In a 64 word VM, RSP should start at address 55.");
+      "In a 64 word VM, RSP should start at address 55.");
     vm.tick(); // PUSH 6
     vm.tick(); // CALL
     expect(vm.IP).toBe(6,
-    "executing 'PUSH 6 CALL' should set IP to 6 in one tick.");
+      "executing 'PUSH 6 CALL' should set IP to 6 in one tick.");
     expect(vm.PSP).toBe(63,
-    "Executing 'CALL' Should decrement the stack from 62 to 63.");
+      "Executing 'CALL' Should decrement the stack from 62 to 63.");
     expect(vm.buffer[vm.RSP + 1]).toBe(3,
-    "Executing 'CALL' should store next IP address into return stack before jumping into subroutine.");
+      "Executing 'CALL' should store next IP address into return stack before jumping into subroutine.");
     expect(vm.RSP).toBe(54,
-    "CALLing an address should grow RSP by 1.");
+      "CALLing an address should grow RSP by 1.");
     vm.tick();
     expect(vm.buffer[vm.PSP + 1]).toBe(5,
-    "Expected to be on the stack after calling a subroutine that pushes 5 on stack.");
+      "Expected to be on the stack after calling a subroutine that pushes 5 on stack.");
     vm.tick();
     expect(vm.IP).toBe(3,
-    "RETURN should take IP back to (starting_address + 1) ");
+      "RETURN should take IP back to (starting_address + 1) ");
     expect(vm.RSP).toBe(55,
-    "RETURNing should shrink RSP by 1.");
+      "RETURNing should shrink RSP by 1.");
   });
 
-  it('branches when IF is given 0', function() {
-     
+  it('branches when IF is given 0', function () {
+
     let vm = run(`  if
                     0
                     5
@@ -63,7 +63,7 @@ describe("Default instructions", function () {
       "Expected the IF statement to branch to PUSH 99.");
   });
 
-  it("does not branch when condition != 0", function() {
+  it("does not branch when condition != 0", function () {
     let vm = run(`  if
                     1
                     5
@@ -106,6 +106,44 @@ describe("Default instructions", function () {
       "Stack pointer should point to the next available stack slot.");
     expect(vm.buffer[vm.PSP + 1]).toEqual(3,
       "Expected last PUSHed value to be one address under stack pointer.");
+  });
+
+  it("has an OVER instruction", function () {
+    let vm = run(`
+    push
+    3
+    push
+    6
+    over
+    `);
+    let start = vm.PSP;
+    vm.tick();
+    vm.tick();
+    vm.tick();
+    let end = vm.PSP;
+    expect(vm.PSP).toBe(60);
+    expect(vm.IP).toBe(5,
+      "Expected to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 3]).toBe(3);
+    expect(vm.buffer[vm.PSP + 2]).toBe(6);
+    expect(vm.buffer[vm.PSP + 1]).toBe(3);
+  });
+
+  it("has an RPUSH instruction", function () {
+    let vm = run(`
+    rpush
+    3
+    `);
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    expect(vm.PSP).toBe(63,
+      "Expected parameter stack to be empty.");
+    expect(vm.RSP).toBe(54,
+      "Expected one item in return stack.");
+    expect(vm.IP).toBe(2,
+      "Expected RPUSH to increment instruction pointer.");
+    expect(vm.buffer[vm.RSP + 1]).toBe(3);
   });
 
   it("has a STORE instruction", () => {
@@ -168,7 +206,7 @@ describe("Default instructions", function () {
     expect(vm.buffer[vm.PSP + 2]).toEqual(8);
   });
 
-  it("ADDs two numbers", function() {
+  it("ADDs two numbers", function () {
     let vm = run(`
     push
     2
@@ -184,10 +222,10 @@ describe("Default instructions", function () {
     expect(vm.IP).toBe(5,
       "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(5,
-    "Expect (2 3 ADD) to leave 5 on the stack.");
+      "Expect (2 3 ADD) to leave 5 on the stack.");
   });
 
-  it("SUBs two numbers", function() {
+  it("SUBs two numbers", function () {
     let vm = run(`
     push
     9
@@ -205,7 +243,7 @@ describe("Default instructions", function () {
       "Expect (3 2 SUB) to leave 1 on the stack.");
   });
 
-  it("ORs two numbers", function() {
+  it("ORs two numbers", function () {
     let vm = run(`
     push
     9
@@ -223,7 +261,7 @@ describe("Default instructions", function () {
       "Expect (9 2 OR) to leave 1 on the stack.");
   });
 
-  it("XORs two numbers", function() {
+  it("XORs two numbers", function () {
     let vm = run(`
     push
     9
@@ -241,7 +279,7 @@ describe("Default instructions", function () {
       "Expect (9 2 XOR) to leave 1 on the stack.");
   });
 
-  it("ANDs two numbers", function() {
+  it("ANDs two numbers", function () {
     let vm = run(`
     push
     3
@@ -259,7 +297,7 @@ describe("Default instructions", function () {
       "Expect (3 11 AND) to leave 1 on the stack.");
   });
 
-  it("SWAPs two numbers", function() {
+  it("SWAPs two numbers", function () {
     let vm = run(`
     push
     3
@@ -268,40 +306,11 @@ describe("Default instructions", function () {
     swap
     `);
     vm.tick();
-    dump(vm);
     vm.tick();
-    dump(vm);
     vm.tick();
-    dump(vm);
-
     expect(vm.IP).toBe(5,
       "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 2]).toBe(11);
     expect(vm.buffer[vm.PSP + 1]).toBe(3);
   });
-
-  it("has an OVER instruction", function() {
-    let vm = run(`
-    push
-    3
-    push
-    6
-    over
-    `);
-    let start = vm.PSP;
-    vm.tick();
-    dump(vm);
-    vm.tick();
-    dump(vm);
-    vm.tick();
-    dump(vm);
-    let end = vm.PSP;
-    expect(vm.PSP).toBe(60);
-    expect(vm.IP).toBe(5,
-      "Expected to increment instruction pointer by 1.");
-    expect(vm.buffer[vm.PSP + 3]).toBe(3);
-    expect(vm.buffer[vm.PSP + 2]).toBe(6);
-    expect(vm.buffer[vm.PSP + 1]).toBe(3);
-  });
-
 })
