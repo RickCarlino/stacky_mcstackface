@@ -133,11 +133,13 @@ export namespace DefaultInstructions {
     let undr = vm.buffer[vm.PSP + 2];
     vm.buffer[vm.PSP + 1] = undr;
     vm.buffer[vm.PSP + 2] = over;
-    vm.IP++
+    vm.IP++;
   }
 
   export function OVER(vm: VM) {
-    console.log("PENDING...");
+    vm.buffer[vm.PSP] = vm.buffer[vm.PSP + 2];
+    vm.PSP--;
+    vm.IP++;
   }
   
   export function RPUSH(vm: VM) {

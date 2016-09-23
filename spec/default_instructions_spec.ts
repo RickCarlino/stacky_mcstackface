@@ -182,7 +182,7 @@ describe("Default instructions", function () {
     vm.tick();
 
     expect(vm.IP).toBe(5,
-      "Expected add to increment instruction pointer by 1.");
+      "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(5,
     "Expect (2 3 ADD) to leave 5 on the stack.");
   });
@@ -200,7 +200,7 @@ describe("Default instructions", function () {
     vm.tick();
 
     expect(vm.IP).toBe(5,
-      "Expected add to increment instruction pointer by 1.");
+      "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(7,
       "Expect (3 2 SUB) to leave 1 on the stack.");
   });
@@ -218,7 +218,7 @@ describe("Default instructions", function () {
     vm.tick();
 
     expect(vm.IP).toBe(5,
-      "Expected add to increment instruction pointer by 1.");
+      "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(11,
       "Expect (9 2 OR) to leave 1 on the stack.");
   });
@@ -236,7 +236,7 @@ describe("Default instructions", function () {
     vm.tick();
 
     expect(vm.IP).toBe(5,
-      "Expected add to increment instruction pointer by 1.");
+      "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(11,
       "Expect (9 2 XOR) to leave 1 on the stack.");
   });
@@ -254,7 +254,7 @@ describe("Default instructions", function () {
     vm.tick();
 
     expect(vm.IP).toBe(5,
-      "Expected add to increment instruction pointer by 1.");
+      "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(3,
       "Expect (3 11 AND) to leave 1 on the stack.");
   });
@@ -275,8 +275,32 @@ describe("Default instructions", function () {
     dump(vm);
 
     expect(vm.IP).toBe(5,
-      "Expected add to increment instruction pointer by 1.");
+      "Expected to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 2]).toBe(11);
+    expect(vm.buffer[vm.PSP + 1]).toBe(3);
+  });
+
+  it("has an OVER instruction", function() {
+    let vm = run(`
+    push
+    3
+    push
+    6
+    over
+    `);
+    let start = vm.PSP;
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    let end = vm.PSP;
+    expect(vm.PSP).toBe(60);
+    expect(vm.IP).toBe(5,
+      "Expected to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 3]).toBe(3);
+    expect(vm.buffer[vm.PSP + 2]).toBe(6);
     expect(vm.buffer[vm.PSP + 1]).toBe(3);
   });
 
