@@ -71,34 +71,44 @@ export namespace DefaultInstructions {
 
   /** Puts n2 - n1 on top of stack. */  
   export function SUB(vm: VM) {
-    let one = DROP(vm);
-    let two = DROP(vm);
-    vm.buffer[vm.PSP + 2] = one - two;
+    let a = DROP(vm);
+    let b = DROP(vm);
+  
+    vm.buffer[vm.PSP] = b - a;
     vm.IP++
     vm.PSP--;
   }
   
   /** Bitwise OR of n1 and n2 */
   export function OR(vm: VM) {
-    // vm.buffer[vm.PSP + 2] = DROP(vm) | DROP(vm);
-    // vm.IP++
-    // vm.PSP--;
+    let a = DROP(vm);
+    let b = DROP(vm);
+  
+    vm.buffer[vm.PSP] = b | a;
+    vm.IP++
+    vm.PSP--;
   }
   
   /** Exclusive OR of n1 and n2 */
   export function XOR(vm: VM) {
-    // vm.buffer[vm.PSP + 2] = DROP(vm) ^ DROP(vm);
-    // vm.IP++
-    // vm.PSP--;
+    let a = DROP(vm);
+    let b = DROP(vm);
+  
+    vm.buffer[vm.PSP] = b ^ a;
+    vm.IP++
+    vm.PSP--;
   }
   
   export function AND(vm: VM) {
-    // vm.buffer[vm.PSP + 2] = DROP(vm) & DROP(vm);
-    // vm.IP++
-    // vm.PSP--;
+    let a = DROP(vm);
+    let b = DROP(vm);
+  
+    vm.buffer[vm.PSP] = b & a;
+    vm.IP++
+    vm.PSP--;
   }
   
-  export function DROP(vm: VM) {
+  export function DROP(vm: VM): number {
     vm.PSP++;
     let val = vm.buffer[vm.PSP];
     vm.buffer[vm.PSP] = 0; // This is for ease of debugging. Not required.
@@ -106,10 +116,18 @@ export namespace DefaultInstructions {
   }
   
   export function DUP(vm: VM) {
-    console.log("PENDING...");
-    
+    vm.buffer[vm.PSP] = vm.buffer[vm.PSP + 1];
+    vm.PSP--    
+    vm.IP++
   }
   
+  export function RDROP(vm: VM) {
+    vm.RSP++;
+    let val = vm.buffer[vm.RSP];
+    vm.buffer[vm.RSP] = 0; // This is for ease of debugging. Not required.
+    return val;
+  }
+
   export function OVER(vm: VM) {
     console.log("PENDING...");
   }
@@ -122,13 +140,6 @@ export namespace DefaultInstructions {
   export function RPUSH(vm: VM) {
     console.log("PENDING...");
     
-  }
-  // TODO: Rename to RDROP
-  export function RDROP(vm: VM) {
-    vm.RSP++;
-    let val = vm.buffer[vm.RSP];
-    vm.buffer[vm.RSP] = 0; // This is for ease of debugging. Not required.
-    return val;
   }
   // Add MUL DIV LSHIFT and RSHIFT
   // Rename PUSH to LIT to stay consistent with text???  

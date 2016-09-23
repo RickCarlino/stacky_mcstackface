@@ -6,77 +6,6 @@ import { run, dump } from "./helpers";
 
 
 describe("Default instructions", function () {
-  it("has a NOOP instruction", () => {
-    let vm = run("nooP Noop NOOP");
-    let startIP = vm.IP;
-    vm.tick();
-    vm.tick();
-    vm.tick();
-    let endIP = vm.IP;
-    expect(endIP).toEqual(startIP + 3,
-      "A NOOP instruction should increment the instruction pointer each time it is called.");
-    expect(vm.PSP).toEqual(vm.END_ADDRESS,
-      "The NOOP instruction has no stack effect.");
-  });
-
-  it("has a PUSH instruction", function () {
-    let vm = run("PUSH 1 pUsH 2 PUsh 3");
-    vm.tick();
-    vm.tick();
-    vm.tick();
-    expect(vm.END_ADDRESS).toBeGreaterThan(vm.PSP);
-    expect(vm.PSP).toEqual(vm.END_ADDRESS - 3);
-    expect(vm.buffer[vm.END_ADDRESS]).toEqual(
-      1,
-      "I pushed 1 onto the stack. Therefore, I expected one to be the element at the bottom of the stack.");
-    expect(vm.buffer[vm.PSP]).toEqual(0,
-      "Stack pointer should point to the next available stack slot.");
-    expect(vm.buffer[vm.PSP + 1]).toEqual(3,
-      "Expected last PUSHed value to be one address under stack pointer.");
-  });
-
-  it("has a STORE instruction", () => {
-    let vm = run(`
-    push 34
-    push 12
-    store
-    `);
-    let startIP = vm.IP;
-    let startPSP = vm.PSP;
-    vm.tick();
-    vm.tick();
-    vm.tick();
-    let endIP = vm.IP;
-    let endPSP = vm.PSP;
-    expect(startPSP).toEqual(vm.END_ADDRESS);
-    expect(endIP).toEqual((startIP + 5),
-      "Push increments the stack 2x. Store 1x. Push + push + store = 5 IP incrementations.");
-    expect(vm.PSP).toEqual(vm.END_ADDRESS,
-      "The STORE instruction should clear the last two stack items.");
-    expect(vm.buffer[12]).toEqual(34);
-  });
-
-  it("has a FETCH instruction", () => {
-    let vm = run(`
-    push 13
-    push 8
-    store
-    push 8
-    fetch
-    `);
-    let startIP = vm.IP;
-    let startPSP = vm.PSP;
-    vm.tick();
-    vm.tick();
-    vm.tick();
-    vm.tick();
-    vm.tick();
-    let endIP = vm.IP;
-    let endPSP = vm.PSP;
-    expect(vm.PSP).toEqual((vm.END_ADDRESS - 1),
-      "Expected stack to have 1 item after STORE operation.");
-    expect(vm.buffer[vm.PSP + 1]).toEqual(13);
-  });
 
   it("has CALL and RETURN instruction", () => {
     // Testing in isolation is not enough.
@@ -150,6 +79,97 @@ describe("Default instructions", function () {
       "Expected the IF statement to branch to PUSH 66.");
   });
 
+  it("has a NOOP instruction", () => {
+    let vm = run("nooP Noop NOOP");
+    let startIP = vm.IP;
+    vm.tick();
+    vm.tick();
+    vm.tick();
+    let endIP = vm.IP;
+    expect(endIP).toEqual(startIP + 3,
+      "A NOOP instruction should increment the instruction pointer each time it is called.");
+    expect(vm.PSP).toEqual(vm.END_ADDRESS,
+      "The NOOP instruction has no stack effect.");
+  });
+
+  it("has a PUSH instruction", function () {
+    let vm = run("PUSH 1 pUsH 2 PUsh 3");
+    vm.tick();
+    vm.tick();
+    vm.tick();
+    expect(vm.END_ADDRESS).toBeGreaterThan(vm.PSP);
+    expect(vm.PSP).toEqual(vm.END_ADDRESS - 3);
+    expect(vm.buffer[vm.END_ADDRESS]).toEqual(
+      1,
+      "I pushed 1 onto the stack. Therefore, I expected one to be the element at the bottom of the stack.");
+    expect(vm.buffer[vm.PSP]).toEqual(0,
+      "Stack pointer should point to the next available stack slot.");
+    expect(vm.buffer[vm.PSP + 1]).toEqual(3,
+      "Expected last PUSHed value to be one address under stack pointer.");
+  });
+
+  it("has a STORE instruction", () => {
+    let vm = run(`
+    push 34
+    push 12
+    store
+    `);
+    let startIP = vm.IP;
+    let startPSP = vm.PSP;
+    vm.tick();
+    vm.tick();
+    vm.tick();
+    let endIP = vm.IP;
+    let endPSP = vm.PSP;
+    expect(startPSP).toEqual(vm.END_ADDRESS);
+    expect(endIP).toEqual((startIP + 5),
+      "Push increments the stack 2x. Store 1x. Push + push + store = 5 IP incrementations.");
+    expect(vm.PSP).toEqual(vm.END_ADDRESS,
+      "The STORE instruction should clear the last two stack items.");
+    expect(vm.buffer[12]).toEqual(34);
+  });
+
+  it("has a FETCH instruction", () => {
+    let vm = run(`
+    push 13
+    push 8
+    store
+    push 8
+    fetch
+    `);
+    let startIP = vm.IP;
+    let startPSP = vm.PSP;
+    vm.tick();
+    vm.tick();
+    vm.tick();
+    vm.tick();
+    vm.tick();
+    let endIP = vm.IP;
+    let endPSP = vm.PSP;
+    expect(vm.PSP).toEqual((vm.END_ADDRESS - 1),
+      "Expected stack to have 1 item after STORE operation.");
+    expect(vm.buffer[vm.PSP + 1]).toEqual(13);
+  });
+
+  it("has a DUP instruction", () => {
+    let vm = run(`
+    push 8
+    dup
+    `);
+    let startIP = vm.IP;
+    let startPSP = vm.PSP;
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    let endIP = vm.IP;
+    let endPSP = vm.PSP;
+    expect(vm.PSP).toEqual((vm.END_ADDRESS - 2),
+      "Expected stack to have 2 items after DUP operation.");
+    expect(vm.buffer[vm.PSP + 1]).toEqual(8);
+    expect(vm.buffer[vm.PSP + 2]).toEqual(8);
+  });
+
   it("ADDs two numbers", function() {
     let vm = run(`
     push
@@ -172,25 +192,73 @@ describe("Default instructions", function () {
   it("SUBs two numbers", function() {
     let vm = run(`
     push
-    7
+    9
     push
     2
     sub
-    noop
     `);
-    dump(vm);
     vm.tick();
-    dump(vm);
     vm.tick();
-    dump(vm);
-    vm.tick();
-    dump(vm);
     vm.tick();
 
     expect(vm.IP).toBe(5,
       "Expected add to increment instruction pointer by 1.");
-    expect(vm.buffer[vm.PSP + 1]).toBe(5,
+    expect(vm.buffer[vm.PSP + 1]).toBe(7,
       "Expect (3 2 SUB) to leave 1 on the stack.");
+  });
+
+  it("ORs two numbers", function() {
+    let vm = run(`
+    push
+    9
+    push
+    2
+    or
+    `);
+    vm.tick();
+    vm.tick();
+    vm.tick();
+
+    expect(vm.IP).toBe(5,
+      "Expected add to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 1]).toBe(11,
+      "Expect (9 2 OR) to leave 1 on the stack.");
+  });
+
+  it("XORs two numbers", function() {
+    let vm = run(`
+    push
+    9
+    push
+    2
+    xor
+    `);
+    vm.tick();
+    vm.tick();
+    vm.tick();
+
+    expect(vm.IP).toBe(5,
+      "Expected add to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 1]).toBe(11,
+      "Expect (9 2 XOR) to leave 1 on the stack.");
+  });
+
+  it("ANDs two numbers", function() {
+    let vm = run(`
+    push
+    3
+    push
+    11
+    and
+    `);
+    vm.tick();
+    vm.tick();
+    vm.tick();
+
+    expect(vm.IP).toBe(5,
+      "Expected add to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 1]).toBe(3,
+      "Expect (3 11 AND) to leave 1 on the stack.");
   });
 
 })
