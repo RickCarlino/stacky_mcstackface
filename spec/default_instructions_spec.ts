@@ -159,9 +159,7 @@ describe("Default instructions", function () {
     let startIP = vm.IP;
     let startPSP = vm.PSP;
     vm.tick();
-    dump(vm);
     vm.tick();
-    dump(vm);
     let endIP = vm.IP;
     let endPSP = vm.PSP;
     expect(vm.PSP).toEqual((vm.END_ADDRESS - 2),
@@ -259,6 +257,27 @@ describe("Default instructions", function () {
       "Expected add to increment instruction pointer by 1.");
     expect(vm.buffer[vm.PSP + 1]).toBe(3,
       "Expect (3 11 AND) to leave 1 on the stack.");
+  });
+
+  it("SWAPs two numbers", function() {
+    let vm = run(`
+    push
+    3
+    push
+    11
+    swap
+    `);
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+    vm.tick();
+    dump(vm);
+
+    expect(vm.IP).toBe(5,
+      "Expected add to increment instruction pointer by 1.");
+    expect(vm.buffer[vm.PSP + 2]).toBe(11);
+    expect(vm.buffer[vm.PSP + 1]).toBe(3);
   });
 
 })

@@ -128,13 +128,16 @@ export namespace DefaultInstructions {
     return val;
   }
 
+  export function SWAP(vm: VM) {
+    let over = vm.buffer[vm.PSP + 1];
+    let undr = vm.buffer[vm.PSP + 2];
+    vm.buffer[vm.PSP + 1] = undr;
+    vm.buffer[vm.PSP + 2] = over;
+    vm.IP++
+  }
+
   export function OVER(vm: VM) {
     console.log("PENDING...");
-  }
-  
-  export function SWAP(vm: VM) {
-    console.log("PENDING...");
-    
   }
   
   export function RPUSH(vm: VM) {
