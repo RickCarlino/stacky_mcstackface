@@ -8,6 +8,12 @@ A stack based virtual machine and compiler based off of [the instruction set out
  * I wanted to write my own FORTH, but didn't want to go through the trouble of learning a real assembly environment.
  * You don't tell me what to do! IM JUST HAVING FUN OK!?
 
+# Architecture
+
+ * `vm.IP`  - Next instruction that will be processed if you execute `vm.tick()`.
+ * `vm.RSP` - Points to next free slot in the return stack.
+ * `vm.PSP` - Points to next free slot in the parameter stack. Often just called "The Stack".
+
 # Road Map
 
  - [X] Memory.
@@ -26,16 +32,31 @@ A stack based virtual machine and compiler based off of [the instruction set out
 
 # Usage
 
-TBD
-
 ```typescript
+import { VM } from "./vm";
+import { Compiler } from "./compiler";
 
-// Compilation
+// Instantiate a 64 word (128 byte) virtual machine.
+    let vm = new VM(64); // 64 words (16 bit each).
 
-// Instantiation
+// Create a compiler using a known instruction set.
+    let compileFn = Compiler(VM.DEFAULT_INSTRUCTION_SET);
 
-// Run
+// Compile text source code into numeric byte code.
+    let program = compileFn(`PUSH 1 PUSH 5 ADD 4 SUB`);
+    // => [ 2, 1, 2, 5, 8, 4, 9 ];
 
+// Load the VM.
+   vm.load(program);
+
+// Execute "cycles"
+    vm.tick(); // => PUSH 1
+    vm.tick(); // => PUSH 5
+    vm.tick(); // => ADD  4
+    vm.tick(); // => SUB
+
+// OK, I'm done.
+    vm.reset();
 ```
 
 # Instruction Set

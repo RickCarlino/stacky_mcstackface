@@ -1,6 +1,7 @@
 import { defaultIntstructionSet } from "./instruction_set";
 /** A slice of bits representing the VM memory. */
 export class VM {
+  static DEFAULT_INSTRUCTION_SET = defaultIntstructionSet;
   /** Raw JS memory buffer. Avoid direct modification. */
   public buffer: Uint16Array;
 
@@ -57,4 +58,3 @@ export class VM {
     });
   }
 }
-
