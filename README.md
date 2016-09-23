@@ -43,7 +43,7 @@ import { Compiler } from "./compiler";
     let compileFn = Compiler(VM.DEFAULT_INSTRUCTION_SET);
 
 // Compile text source code into numeric byte code.
-    let program = compileFn(`PUSH 1 PUSH 5 ADD 4 SUB`);
+    let program = compileFn(`PUSH 1 PUSH 5 ADD SUB 4`);
     // => [ 2, 1, 2, 5, 8, 4, 9 ];
 
 // Load the VM.
@@ -52,8 +52,8 @@ import { Compiler } from "./compiler";
 // Execute "cycles"
     vm.tick(); // => PUSH 1
     vm.tick(); // => PUSH 5
-    vm.tick(); // => ADD  4
-    vm.tick(); // => SUB
+    vm.tick(); // => ADD
+    vm.tick(); // => SUB 4
 
 // OK, I'm done.
     vm.reset();
