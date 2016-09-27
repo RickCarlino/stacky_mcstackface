@@ -2,7 +2,6 @@
   "name": "stacky_mcstackface",
   "version": "0.1.0",
   "description": "An implementation of the 'Canonical Stack Machine'.",
-  "entry": "./build/index.js",
   "scripts": {
     "test": "tsc && jasmine-node build/spec/ --verbose --captureExceptions"
   },
@@ -11,5 +10,23 @@
   "devDependencies": {
     "jasmine": "^2.5.1",
     "jasmine-node": "^1.14.5"
-  }
+  },
+  "main": "build/index.js",
+  "dependencies": {
+    "jasmine": "^2.5.2",
+    "jasmine-node": "^1.14.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RickCarlino/stacky_mcstackface.git"
+  },
+  "keywords": [
+    "stack",
+    "vm",
+    "programming"
+  ],
+  "bugs": {
+    "url": "https://github.com/RickCarlino/stacky_mcstackface/issues"
+  },
+  "homepage": "https://github.com/RickCarlino/stacky_mcstackface#readme"
 }
