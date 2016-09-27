@@ -149,7 +149,7 @@ export namespace DefaultInstructions {
     vm.IP++;
   }
   // Add MUL DIV LSHIFT and RSHIFT
-  // Rename PUSH to LIT to stay consistent with text???  
+  // Rename PUSH to LIT to stay consistent with textbook?  
   // Add stack overflow/underflow exceptions or interupts?
   // Add I/O interupts (hardware CALL to address 0 like an M17?) and/or SYSCALL for output
 }

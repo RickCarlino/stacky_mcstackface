@@ -1,4 +1,5 @@
-import { InstructionSet, defaultIntstructionSet } from "./instruction_set";
+import { InstructionSet } from "./instruction_set";
+import { VM } from "./vm";
 
 /** Converts a block of text into a cleaned array of tokens. */
 function tokenize(input: string): string[] {
@@ -26,7 +27,7 @@ function parse(tokens: string[], instructionSet: InstructionSet): number[] {
 // TODO: Add support for labels when jumping.
 /** Generate a compiler function that can convert text chunks into arrays of
  * op codes. */
-export let Compiler = (i: InstructionSet = defaultIntstructionSet) =>
+export let Compiler = (i: InstructionSet = VM.INSTRUCTIONS) =>
   (input: string): number[] => {
     let tokens = tokenize(input);
     let program = parse(tokens, i);

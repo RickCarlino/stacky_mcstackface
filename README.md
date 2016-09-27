@@ -33,17 +33,17 @@ A stack based virtual machine and compiler based off of [the instruction set out
 # Usage
 
 ```typescript
-import { VM } from "./vm";
-import { Compiler } from "./compiler";
+
+import { VM, Compiler } from "stacky_mcstackface";
 
 // Instantiate a 64 word (128 byte) virtual machine.
     let vm = new VM(64); // 64 words (16 bit each).
 
-// Create a compiler using a known instruction set.
-    let compileFn = Compiler(VM.DEFAULT_INSTRUCTION_SET);
+// Create a compiler instance.
+    let compileFn = Compiler();
 
 // Compile text source code into numeric byte code.
-    let program = compileFn(`PUSH 1 PUSH 5 ADD SUB 4`);
+    let program = compileFn(`PUSH 1 PUSH 5 ADD 4 SUB`);
     // => [ 2, 1, 2, 5, 8, 4, 9 ];
 
 // Load the VM.
@@ -52,11 +52,9 @@ import { Compiler } from "./compiler";
 // Execute "cycles"
     vm.tick(); // => PUSH 1
     vm.tick(); // => PUSH 5
-    vm.tick(); // => ADD
-    vm.tick(); // => SUB 4
+    vm.tick(); // => ADD  4
+    vm.tick(); // => SUB
 
-// OK, I'm done.
-    vm.reset();
 ```
 
 # Instruction Set

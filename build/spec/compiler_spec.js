@@ -1,15 +1,15 @@
 /// <reference path="../typings/index.d.ts" />
 "use strict";
 var compiler_1 = require("../compiler");
-var instruction_set_1 = require("../instruction_set");
+var vm_1 = require("../vm");
 describe("Compiler", function () {
-    var compile = compiler_1.Compiler(instruction_set_1.defaultIntstructionSet);
+    var compile = compiler_1.Compiler();
     it("turns text into an array of instruction opcodes", function () {
         var program = compile("\n    PUSH 123\n    noOp\n    ");
         expect(program).toEqual([
-            instruction_set_1.defaultIntstructionSet.fetchOpcode("push"),
+            vm_1.VM.INSTRUCTIONS.fetchOpcode("push"),
             123,
-            instruction_set_1.defaultIntstructionSet.fetchOpcode("noop")
+            vm_1.VM.INSTRUCTIONS.fetchOpcode("noop")
         ]);
     });
 });

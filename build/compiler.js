@@ -1,5 +1,5 @@
 "use strict";
-var instruction_set_1 = require("./instruction_set");
+var vm_1 = require("./vm");
 /** Converts a block of text into a cleaned array of tokens. */
 function tokenize(input) {
     return input
@@ -24,7 +24,7 @@ function parse(tokens, instructionSet) {
 /** Generate a compiler function that can convert text chunks into arrays of
  * op codes. */
 exports.Compiler = function (i) {
-    if (i === void 0) { i = instruction_set_1.defaultIntstructionSet; }
+    if (i === void 0) { i = vm_1.VM.INSTRUCTIONS; }
     return function (input) {
         var tokens = tokenize(input);
         var program = parse(tokens, i);

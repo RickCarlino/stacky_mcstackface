@@ -16,5 +16,3 @@ export declare class InstructionSet {
     /** Find an instruction by name. */
     fetchOpcode(name: string): number;
 }
-/** The default set of instructions. */
-export declare let defaultIntstructionSet: InstructionSet;

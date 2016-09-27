@@ -56,24 +56,3 @@ export class InstructionSet {
     }
   }
 }
-
-/** The default set of instructions. */
-export let defaultIntstructionSet = new InstructionSet()
-  .add("NOOP", DefaultInstructions.NOOP)
-  .add("PUSH", DefaultInstructions.PUSH)
-  .add("STORE", DefaultInstructions.STORE)
-  .add("FETCH", DefaultInstructions.FETCH)
-  .add("CALL", DefaultInstructions.CALL)
-  .add("RETURN", DefaultInstructions.RETURN)
-  .add("IF", DefaultInstructions.IF)
-  .add("ADD", DefaultInstructions.ADD)
-  .add("SUB", DefaultInstructions.SUB)
-  .add("OR", DefaultInstructions.OR)
-  .add("XOR", DefaultInstructions.XOR)
-  .add("AND", DefaultInstructions.AND)
-  .add("DROP", DefaultInstructions.DROP)
-  .add("DUP", DefaultInstructions.DUP)
-  .add("OVER", DefaultInstructions.OVER)
-  .add("SWAP", DefaultInstructions.SWAP)
-  .add("RPUSH", DefaultInstructions.RPUSH)
-  .add("RDROP", DefaultInstructions.RDROP);

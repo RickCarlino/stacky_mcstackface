@@ -3,6 +3,9 @@ import { DefaultInstructions } from "./default_instructions";
 
 /** A slice of bits representing the VM memory. */
 export class VM {
+  /** The default instructions that come with a dtandard VM.
+   *  Can be patched or extended.
+   */
   static INSTRUCTIONS = new InstructionSet()
     .add("NOOP", DefaultInstructions.NOOP)
     .add("PUSH", DefaultInstructions.PUSH)
