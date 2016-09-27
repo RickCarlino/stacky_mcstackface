@@ -5,7 +5,7 @@ import { Compiler } from "./compiler";
     let vm = new VM(64); // 64 words (16 bit each).
 
 // Create a compiler using a known instruction set.
-    let compileFn = Compiler(VM.DEFAULT_INSTRUCTION_SET);
+    let compileFn = Compiler(VM.INSTRUCTIONS);
 // Compile text source code into numeric byte code.
     let program = compileFn(`PUSH 1 PUSH 5 ADD 4 SUB`);
     // => [ 2, 1, 2, 5, 8, 4, 9 ];

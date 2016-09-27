@@ -134,9 +134,7 @@ describe("Default instructions", function () {
     rpush
     3
     `);
-    dump(vm);
     vm.tick();
-    dump(vm);
     expect(vm.PSP).toBe(63,
       "Expected parameter stack to be empty.");
     expect(vm.RSP).toBe(54,

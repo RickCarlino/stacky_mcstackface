@@ -1,13 +1,13 @@
 {
-  "name": "ts_forth",
-  "version": "1.0.0",
-  "description": "",
+  "name": "stacky_mcstackface",
+  "version": "0.0.1",
+  "description": "An implementation of the 'Canonical Stack Machine'.",
   "main": "index.js",
   "scripts": {
     "test": "tsc && jasmine-node build/spec/ --verbose --captureExceptions"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Rick Carlino",
+  "license": "MIT",
   "devDependencies": {
     "jasmine": "^2.5.1",
     "jasmine-node": "^1.14.5"
