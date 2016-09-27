@@ -1,6 +1,6 @@
 {
   "name": "stacky_mcstackface",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An implementation of the 'Canonical Stack Machine'.",
   "entry": "./build/index.js",
   "scripts": {
