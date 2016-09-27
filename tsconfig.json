@@ -3,7 +3,6 @@
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
-    "declarationDir": "types",
     "noImplicitAny": true,
     "allowUnreachableCode": false,
     "strictNullChecks": true,

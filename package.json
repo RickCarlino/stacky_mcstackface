@@ -2,7 +2,7 @@
   "name": "stacky_mcstackface",
   "version": "0.0.1",
   "description": "An implementation of the 'Canonical Stack Machine'.",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "tsc && jasmine-node build/spec/ --verbose --captureExceptions"
   },
