@@ -5,7 +5,7 @@ export declare class Instruction {
     opCode: number;
     /** Implementation of the instruction. Directly acts on VM. */
     fn: InstructionFn;
-    /** Human readable pneumonic. Eg: PUSH, POP, ADD */
+    /** Human readable mnemonic. Eg: PUSH, POP, ADD */
     name: string;
     constructor(
         /** Numeric code that the VM uses to id the instruction */

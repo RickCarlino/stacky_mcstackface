@@ -36,13 +36,13 @@ export class InstructionSet {
     return this;
   }
 
-  /** Find a pneumonic by number */
-  fetchPneumonic(opCode: number) {
+  /** Find a mnemonic by number */
+  fetchMnemonic(opCode: number) {
     let i = this.all[opCode];
     if(i) {
       return i.name;
     } else {
-      throw new Error("Can't find pneumonic with op code " + opCode);
+      throw new Error("Can't find mnemonic with op code " + opCode);
     }
   }
 

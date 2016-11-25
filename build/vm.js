@@ -16,8 +16,8 @@ var VM = (function () {
     /** Run one execution cycle */
     VM.prototype.tick = function () {
         var opCode = this.buffer[this.IP];
-        var pneumonic = VM.INSTRUCTIONS.fetchPneumonic(opCode);
-        // console.log(`Executing ${pneumonic} (${ opCode }) at address ${ this.IP }`);
+        var mnemonic = VM.INSTRUCTIONS.fetchMnemonic(opCode);
+        // console.log(`Executing ${mnemonic} (${ opCode }) at address ${ this.IP }`);
         VM.INSTRUCTIONS.exec(opCode, this);
     };
     /** Completely reset the VM, including loaded programs. */
@@ -38,6 +38,9 @@ var VM = (function () {
             that.buffer[index + that.START_ADDRESS] = instruction;
         });
     };
+    /** The default instructions that come with a dtandard VM.
+     *  Can be patched or extended.
+     */
     VM.INSTRUCTIONS = new instruction_set_1.InstructionSet()
         .add("NOOP", default_instructions_1.DefaultInstructions.NOOP)
         .add("PUSH", default_instructions_1.DefaultInstructions.PUSH)

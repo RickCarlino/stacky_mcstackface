@@ -58,8 +58,8 @@ export class VM {
   /** Run one execution cycle */
   tick() {
     let opCode = this.buffer[this.IP];
-    let pneumonic = VM.INSTRUCTIONS.fetchPneumonic(opCode);
-    // console.log(`Executing ${pneumonic} (${ opCode }) at address ${ this.IP }`);
+    let mnemonic = VM.INSTRUCTIONS.fetchMnemonic(opCode);
+    // console.log(`Executing ${mnemonic} (${ opCode }) at address ${ this.IP }`);
     VM.INSTRUCTIONS.exec(opCode, this);
   }
 

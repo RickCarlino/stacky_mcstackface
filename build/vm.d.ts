@@ -2,6 +2,9 @@ import { InstructionSet } from "./instruction_set";
 /** A slice of bits representing the VM memory. */
 export declare class VM {
     /** Memory size limit */ SIZE: number;
+    /** The default instructions that come with a dtandard VM.
+     *  Can be patched or extended.
+     */
     static INSTRUCTIONS: InstructionSet;
     /** Raw JS memory buffer. Avoid direct modification. */
     buffer: Uint16Array;

@@ -2,7 +2,7 @@ import { VM } from "./vm";
 
 /** A single primitive instruction. */
 export class Instruction {
-  /** Human readable pneumonic. Eg: PUSH, POP, ADD */
+  /** Human readable mnemonic. Eg: PUSH, POP, ADD */
   public name: string;
 
   constructor(

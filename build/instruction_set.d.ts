@@ -11,8 +11,8 @@ export declare class InstructionSet {
     exec(opcode: number, vm: VM): void;
     /** Add a new instruction to the current instruction set. */
     add(name: string, fn: InstructionFn): this;
-    /** Find a pneumonic by number */
-    fetchPneumonic(opCode: number): string;
+    /** Find a mnemonic by number */
+    fetchMnemonic(opCode: number): string;
     /** Find an instruction by name. */
     fetchOpcode(name: string): number;
 }

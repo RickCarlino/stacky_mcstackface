@@ -23,14 +23,14 @@ var InstructionSet = (function () {
         this.lookup[i.name] = i;
         return this;
     };
-    /** Find a pneumonic by number */
-    InstructionSet.prototype.fetchPneumonic = function (opCode) {
+    /** Find a mnemonic by number */
+    InstructionSet.prototype.fetchMnemonic = function (opCode) {
         var i = this.all[opCode];
         if (i) {
             return i.name;
         }
         else {
-            throw new Error("Can't find pneumonic with op code " + opCode);
+            throw new Error("Can't find mnemonic with op code " + opCode);
         }
     };
     /** Find an instruction by name. */
