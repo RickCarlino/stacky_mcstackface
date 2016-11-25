@@ -48,31 +48,31 @@ describe("Default instructions", function () {
 
   it('branches when IF is given 0', function () {
 
-    let vm = run(`  if
-                    0
-                    5
-                    push
-                    66
-                    push
-                    99 `);
+    let vm = run(`
+      push 0
+      if 6
+      push 66
+      push 99
+    `);
     vm.tick();
-    expect(vm.IP).toBe(5,
-      "IF instruction should jump IP to address if value is 0.");
+    vm.tick();
+    expect(vm.IP).toBe(6,
+      "IF instruction should jump to address if stack holds 0.");
     vm.tick();
     expect(vm.buffer[vm.PSP + 1]).toBe(99,
-      "Expected the IF statement to branch to PUSH 99.");
+      "Expected the IF statement to branch to PUSH 99, NOT 66.");
   });
 
   it("does not branch when condition != 0", function () {
-    let vm = run(`  if
-                    1
-                    5
-                    push
-                    66
-                    push
-                    99 `);
+    let vm = run(`
+      push 1
+      if 4
+      push 66
+      push 99
+    `);
     vm.tick();
-    expect(vm.IP).toBe(3,
+    vm.tick();
+    expect(vm.IP).toBe(4,
       "IF instruction should jump to next instruction if condition is not 0.");
     vm.tick();
     expect(vm.buffer[vm.PSP + 1]).toBe(66,

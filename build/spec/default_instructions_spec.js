@@ -23,16 +23,18 @@ describe("Default instructions", function () {
         expect(vm.RSP).toBe(55, "RETURNing should shrink RSP by 1.");
     });
     it('branches when IF is given 0', function () {
-        var vm = helpers_1.run("  if\n                    0\n                    5\n                    push\n                    66\n                    push\n                    99 ");
+        var vm = helpers_1.run("\n      push 0\n      if 6\n      push 66\n      push 99\n    ");
         vm.tick();
-        expect(vm.IP).toBe(5, "IF instruction should jump IP to address if value is 0.");
         vm.tick();
-        expect(vm.buffer[vm.PSP + 1]).toBe(99, "Expected the IF statement to branch to PUSH 99.");
+        expect(vm.IP).toBe(6, "IF instruction should jump to address if stack holds 0.");
+        vm.tick();
+        expect(vm.buffer[vm.PSP + 1]).toBe(99, "Expected the IF statement to branch to PUSH 99, NOT 66.");
     });
     it("does not branch when condition != 0", function () {
-        var vm = helpers_1.run("  if\n                    1\n                    5\n                    push\n                    66\n                    push\n                    99 ");
+        var vm = helpers_1.run("\n      push 1\n      if 4\n      push 66\n      push 99\n    ");
         vm.tick();
-        expect(vm.IP).toBe(3, "IF instruction should jump to next instruction if condition is not 0.");
+        vm.tick();
+        expect(vm.IP).toBe(4, "IF instruction should jump to next instruction if condition is not 0.");
         vm.tick();
         expect(vm.buffer[vm.PSP + 1]).toBe(66, "Expected the IF statement to branch to PUSH 66.");
     });

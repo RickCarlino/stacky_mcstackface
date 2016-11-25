@@ -110,6 +110,9 @@ var DefaultInstructions;
     }
     DefaultInstructions.AND = AND;
     function DROP(vm) {
+        if (vm.PSP === vm.buffer.length) {
+            throw new Error("Stack underflow.");
+        }
         vm.PSP++;
         var val = vm.buffer[vm.PSP];
         vm.buffer[vm.PSP] = 0; // This is for ease of debugging. Not required.
