@@ -57,7 +57,8 @@ var DefaultInstructions;
     /** Jumps to adress n2 if n1 is 0. */
     function IF(vm) {
         // If N1 is false (value is 0)
-        if (!NOOP(vm)) {
+        var n1 = DROP(vm);
+        if (n1 === 0) {
             vm.IP = NOOP(vm);
         }
         else {

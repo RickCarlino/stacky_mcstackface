@@ -1,6 +1,6 @@
 {
   "name": "stacky_mcstackface",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "An implementation of the 'Canonical Stack Machine'.",
   "scripts": {
     "test": "tsc && jasmine-node build/spec/ --verbose --captureExceptions"

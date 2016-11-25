@@ -21,6 +21,7 @@ A stack based virtual machine and compiler based off of [the instruction set out
  - [X] Instruction set.
  - [ ] Add support for labels to compiler.
  - [ ] Interupts.
+ - [ ] `vm.subscribe(addr)` to observe memory address changes.
  - [ ] I/O.
  - [ ] FORTH compiler.
 

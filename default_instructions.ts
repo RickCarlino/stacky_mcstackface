@@ -55,7 +55,8 @@ export namespace DefaultInstructions {
   /** Jumps to adress n2 if n1 is 0. */
   export function IF(vm: VM) {
     // If N1 is false (value is 0)
-    if(!NOOP(vm)) {
+    let n1 = DROP(vm);
+    if(n1 === 0) {
       vm.IP = NOOP(vm);
     } else {
       vm.IP += 2;
