@@ -110,7 +110,7 @@ var DefaultInstructions;
     }
     DefaultInstructions.AND = AND;
     function DROP(vm) {
-        if (vm.PSP === vm.buffer.length) {
+        if (vm.PSP >= (vm.buffer.length - 1)) {
             throw new Error("Stack underflow.");
         }
         vm.PSP++;

@@ -110,7 +110,7 @@ export namespace DefaultInstructions {
   }
   
   export function DROP(vm: VM): number {
-    if(vm.PSP === vm.buffer.length) {
+    if(vm.PSP >= (vm.buffer.length - 1)) {
       throw new Error("Stack underflow.");
     }
     vm.PSP++;
